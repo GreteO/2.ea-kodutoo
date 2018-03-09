@@ -1,10 +1,7 @@
 # 2. kodutöö – kirjutamise mängu täiendamine
 
-<<<<<<< HEAD
 Grete Ojavere
-=======
 Julika Maiste
->>>>>>> c99c518eb0b258f9244924348278ef732455dea1
 
 Mängu eesmärk on võimalikult kiiresti ekraanile tekkivaid sõnu ära trükkida. Sõnad on võetud [Eesti Keele Instituudi lehelt](http://www.eki.ee/tarkvara/wordlist/) – [lemmad2013](http://www.eki.ee/tarkvara/wordlist/lemmad2013.txt). Aluseks tuleb võtta kood **[eesrakenduste-arendamine-2018k/klahvimine](https://github.com/eesrakenduste-arendamine-2018k/klahvimine)**. 
 
