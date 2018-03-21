@@ -1,4 +1,62 @@
 /* TYPER */
+const GameApp = function () {
+  if (GameApp.instance) {
+    return GameApp.instance
+  }
+  GameApp.instance = this
+
+  this.routes = GameApp.routes
+  this.currentRoute = null
+
+  this.init()
+}
+
+GameApp.routes = {
+  'introduction': {
+    'render': function () {
+      console.log('>>>> Introduction')
+    }
+  },
+  'game': {
+    'render': function () {
+      console.log('>>>> Game')
+    }
+  }
+}
+
+GameApp.prototype = {
+  init: function () {
+    console.log('Rakendus läks tööle')
+
+    window.addEventListener('hashchange', this.routeChange.bind(this))
+
+    if (!window.location.hash) {
+      window.location.hash = 'introduction'
+    } else {
+      this.routeChange()
+    }
+  },
+
+  routeChange: function (event) {
+    this.currentRoute = location.hash.slice(1)
+    if (this.routes[this.currentRoute]) {
+      this.updateMenu()
+
+      this.routes[this.currentRoute].render()
+    } else {
+      /// 404 - ei olnud
+    }
+  },
+
+  updateMenu: function () {
+    // http://stackoverflow.com/questions/195951/change-an-elements-class-with-javascript
+    document.querySelector('.active-menu').className = document.querySelector('.active-menu').className.replace('active-menu', '')
+    document.querySelector('.' + this.currentRoute).className += ' active-menu'
+  }
+
+} 
+
+
 const TYPER = function () {
   if (TYPER.instance_) {
     return TYPER.instance_
@@ -85,7 +143,7 @@ TYPER.prototype = {
 
       if (this.word.left.length === 0) {
         this.guessedWords += 1
-
+        //console.log(this.guessedWords)
         this.generateWord()
       }
 
@@ -137,4 +195,6 @@ function structureArrayByWordLength (words) {
 window.onload = function () {
   const typer = new TYPER()
   window.typer = typer
+  const app = new GameApp()
+  window.app = app
 }

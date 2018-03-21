@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>typer</title>
+    <title>Typer</title>
     <style> 
       * {
         margin: 0;
@@ -17,10 +17,31 @@
       canvas {
         position: absolute;
       }
+
     </style>
     <script src="app.js"></script>
   </head>
   <body>
-    <canvas></canvas>
+      <nav class="menu">
+          <ul class="list">
+            <li class="list-item"><a href="#introduction" class="menu-link introduction active-menu">Introduction</a></li>
+            <li class="list-item"><a href="#game" class="menu-link game">Game</a></li>
+          </ul>
+      </nav>
+
+    
+    <main role="main">
+
+      <section id="introduction">
+        <h1>Tutvustus</h1>
+        <p>Mänu kirjeldus...</p>
+      </section>
+
+      <section id="game">
+        <p>Mäng</p> 
+        <canvas></canvas>
+      </section>
+
+    </main>
   </body>
 </html>
