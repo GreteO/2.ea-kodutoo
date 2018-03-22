@@ -124,6 +124,7 @@ TYPER.prototype = {
   loop: function () {
     console.log(this.secondsLeft)
     this.secondsLeft -= 1
+	
     this.word.Draw()
   },
 
