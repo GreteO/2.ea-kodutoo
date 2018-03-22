@@ -140,8 +140,7 @@ TYPER.prototype = {
 
   keyPressed: function (event) {
     const letter = String.fromCharCode(event.which)
-
-    if (letter === this.word.left.charAt(0)) {
+	if (letter === this.word.left.charAt(0)) {
       this.word.removeFirstLetter()
 
       if (this.word.left.length === 0) {
@@ -179,6 +178,7 @@ Word.prototype = {
   removeFirstLetter: function () {
     this.left = this.left.slice(1)
   }
+  
 }
 
 /* HELPERS */
