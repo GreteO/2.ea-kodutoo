@@ -124,7 +124,9 @@ TYPER.prototype = {
   loop: function () {
     console.log(this.secondsLeft)
     this.secondsLeft -= 1
-	
+	if (this.secondsLeft <= -1){
+		clearInterval(loop)
+	}
     this.word.Draw()
   },
 
