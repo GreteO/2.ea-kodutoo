@@ -76,6 +76,7 @@ const TYPER = function () {
   this.secondsLeft = 10
 
   this.init()
+  document.getElementById("")
 }
 
 window.TYPER = TYPER
@@ -195,9 +196,11 @@ function structureArrayByWordLength (words) {
   return tempArray
 }
 
+
+
 window.onload = function () {
-  const typer = new TYPER()
-  window.typer = typer
+  //const typer = new TYPER()
+  //window.typer = typer
   const app = new GameApp()
   window.app = app
 }
