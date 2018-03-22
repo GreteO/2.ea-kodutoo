@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <title>Typer</title>
     <style> 
+     main > *{
+       display: none;
+     }
+     main > *:last-child {
+       display:block;
+     }
+     main > *:target {
+       display: block;
+     }
+     main > *:target ~ *{
+       displaY: none;
+     }
+     
       * {
         margin: 0;
         padding: 0;
@@ -32,15 +45,15 @@
     
     <main role="main">
 
-      <section id="introduction">
+      <div id="introduction">
         <h1>Tutvustus</h1>
         <p>Mängu kirjeldus...</p>
-      </section>
+      </div>
 
-      <section id="game">
+      <div id="game">
         <p>Mäng</p> 
         <canvas></canvas>
-      </section>
+      </div>
 
     </main>
   </body>
