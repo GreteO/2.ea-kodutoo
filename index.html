@@ -11,8 +11,8 @@
   <body>
       <nav class="menu">
           <ul class="list">
-            <li class="list-item"><a href="#introduction" class="menu-link introduction active-menu">Introduction</a></li>
-            <li class="list-item"><a href="#game" class="menu-link game">Game</a></li>
+            <li class="list-item"><a href="#introduction" class="menu-link introduction active-menu">Juhised</a></li>
+            <li class="list-item"><a href="#game" class="menu-link game">Mäng</a></li>
           </ul>
       </nav>
 
@@ -21,12 +21,13 @@
 
       <div id="introduction">
         <h1>Tutvustus</h1>
-        <p>Mängu kirjeldus...</p>
+		<p>Mäng on koostatud koolitöö raames ja õppe eesmärgil.</p>
+        <h2>Mängu kirjeldus</h2>
+		<p>Vajutades <mark>Alusta mängu</mark> nupule hakka kirjutama ekraanil kuvatavaid sõnu.</p>
       </div>
 
-      <div id="game">
-        <p>Mäng</p>         
-        <input type="button" id="gameStart" value="START" onclick="TYPER()"/>
+      <div id="game">       
+        <button class="button" id="gameStart"  onclick="typer.start()">Alusta mängu</button><br>
         <canvas></canvas>
       </div>
 

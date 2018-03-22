@@ -70,10 +70,10 @@ const TYPER = function () {
 
   this.words = []
   this.word = null
-  this.wordMinLength = 5
-  this.guessedWords = 0
+  this.wordMinLength = 5 //******************siduda input väljaga html-is et määrata alustuse sõna pikkus
+  this.guessedWords = 0 //********************lisada skooriarvutusele
 
-  this.secondsLeft = 10
+  this.secondsLeft = 10 //********************siduda skooriarvutusega
 
   this.init()
 }
@@ -101,10 +101,11 @@ TYPER.prototype = {
       if (xmlhttp.readyState === 4 && (xmlhttp.status === 200 || xmlhttp.status === 0)) {
         const response = xmlhttp.responseText
         const wordsFromFile = response.split('\n')
-
+		
         typer.words = structureArrayByWordLength(wordsFromFile)
-
-        typer.start()
+		document.getElementById('gameStart').addEventListener('click', typer.start)
+        /*typer.start()*/
+		
       }
     }
 
@@ -113,25 +114,28 @@ TYPER.prototype = {
   },
 
   start: function () {
-    this.generateWord()
+    this.generateWord()  //**********************annab mingit errorit
     this.word.Draw()
-
+	this.secondsLeft = 10
+	timer = 10
+	
     window.addEventListener('keypress', this.keyPressed.bind(this))
     
-    window.setInterval(this.loop.bind(this), 1000)
-  },
 
+	timer = setInterval(this.loop.bind(this), 1000) //**********************skooriarvutus tuleb ümber teha
+  },	
   loop: function () {
     console.log(this.secondsLeft)
     this.secondsLeft -= 1
-	if (this.secondsLeft <= -1){
-		clearInterval(loop)
+	if (this.secondsLeft <= 0){
+		clearInterval(timer)
+		
 	}
     this.word.Draw()
   },
 
   generateWord: function () {
-    const generatedWordLength = this.wordMinLength + parseInt(this.guessedWords / 5)
+    const generatedWordLength = this.wordMinLength + parseInt(this.guessedWords / 5) 
     const randomIndex = (Math.random() * (this.words[generatedWordLength].length - 1)).toFixed()
     const wordFromArray = this.words[generatedWordLength][randomIndex]
 
@@ -144,7 +148,7 @@ TYPER.prototype = {
       this.word.removeFirstLetter()
 
       if (this.word.left.length === 0) {
-        this.guessedWords += 1
+        this.guessedWords += 1  //*******************************siia siduda skooriosa
         //console.log(this.guessedWords)
         this.generateWord()
       }
@@ -175,7 +179,7 @@ Word.prototype = {
     this.ctx.fillText(typer.secondsLeft, 100, 100)
   },
 
-  removeFirstLetter: function () {
+  removeFirstLetter: function () {  //*********************************tekitada changeWrongLetterColor() vmt.
     this.left = this.left.slice(1)
   }
   
