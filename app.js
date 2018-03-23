@@ -140,6 +140,7 @@ TYPER.prototype = {
 	  timer = setInterval(this.loop.bind(this), 1000) 
 	  scoreCounter = this.guessedWords + second
   },*/
+  
  /*loop: function () {
 	this.secondsLeft = 10
 	
