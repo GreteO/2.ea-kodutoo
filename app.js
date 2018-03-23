@@ -144,8 +144,13 @@ TYPER.prototype = {
 
   keyPressed: function (event) {
     const letter = String.fromCharCode(event.which)
-	if (letter === this.word.left.charAt(0)) {
-      this.word.removeFirstLetter()
+      if (letter === this.word.left.charAt(0)) {
+        this.word.removeFirstLetter()
+      } 
+      else if(letter!=this.word.left.charAt(0)){
+        this.word.changeLetterColor()
+      }
+   
 
       if (this.word.left.length === 0) {
         this.guessedWords += 1  //*******************************siia siduda skooriosa
@@ -154,7 +159,7 @@ TYPER.prototype = {
       }
 
       this.word.Draw()
-    }
+    
   }
 }
 
@@ -181,6 +186,12 @@ Word.prototype = {
 
   removeFirstLetter: function () {  //*********************************tekitada changeWrongLetterColor() vmt.
     this.left = this.left.slice(1)
+    this.ctx.fillStyle = 'black'
+  },
+
+  changeLetterColor: function (){
+    //this.left = this.left.slice(0)
+    this.ctx.fillStyle = 'red'
   }
   
 }
