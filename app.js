@@ -53,8 +53,8 @@ GameApp.prototype = {
     document.querySelector('.active-menu').className = document.querySelector('.active-menu').className.replace('active-menu', '')
     document.querySelector('.' + this.currentRoute).className += ' active-menu'
   }
-
-} 
+    //document.getElementById('gameStart').addEventListener('click', TYPER)
+}
 
 
 const TYPER = function () {
@@ -198,8 +198,6 @@ function structureArrayByWordLength (words) {
 
   return tempArray
 }
-
-
 
 window.onload = function () {
   const typer = new TYPER()
