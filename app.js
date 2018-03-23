@@ -103,37 +103,48 @@ TYPER.prototype = {
         const wordsFromFile = response.split('\n')
 		
         typer.words = structureArrayByWordLength(wordsFromFile)
+		
 		document.getElementById('gameStart').addEventListener('click', typer.start)
         /*typer.start()*/
-		
+		document.getElementById('gameStart').addEventListener('click', typer.score)
       }
     }
 
     xmlhttp.open('GET', './lemmad2013.txt', true)
     xmlhttp.send()
   },
+  
+ score: function() {
+	 
+	  timer = 10
+	  
+	   while(timer>-1){
+		  //timer = setInterval(timer, 1000)
+		  timer--;
+		console.log(timer)  
+		this.secondsLeft = timer
+	  }
+	  /*timer = setInterval(this.loop.bind(this), 1000) 
+	  scoreCounter = this.guessedWords + second*/
+  },
+ /*loop: function () {
+	this.secondsLeft = 10
+	
+	this.secondsLeft -= 1
+	if (this.secondsLeft <= 0){
+		clearInterval(timer)
+	}
+	this.word.Draw()
+  },*/
 
   start: function () {
     this.generateWord()  //**********************annab mingit errorit
     this.word.Draw()
-	this.secondsLeft = 10
-	timer = 10
 	
     window.addEventListener('keypress', this.keyPressed.bind(this))
     
-
-	timer = setInterval(this.loop.bind(this), 1000) //**********************skooriarvutus tuleb ümber teha
   },	
-  loop: function () {
-    console.log(this.secondsLeft)
-    this.secondsLeft -= 1
-	if (this.secondsLeft <= 0){
-		clearInterval(timer)
-		
-	}
-    this.word.Draw()
-  },
-
+  
   generateWord: function () {
     const generatedWordLength = this.wordMinLength + parseInt(this.guessedWords / 5) 
     const randomIndex = (Math.random() * (this.words[generatedWordLength].length - 1)).toFixed()
