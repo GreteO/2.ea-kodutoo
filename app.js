@@ -116,17 +116,30 @@ TYPER.prototype = {
   
  score: function() {
 	 
+	let count=10;
+	let counter=setInterval(timer, 1000);
+	function timer(){
+		count=count-1;
+		if (count <= 0){
+			clearInterval(counter);
+			return;
+		}
+	//document.getElementById("timer").innerHTML=count + " sekundit";  
+	}
+},
+	 
+	/* timer = setInterval(this.loop.bind(this), 1000)
 	  timer = 10
 	  
-	   while(timer>-1){
-		  //timer = setInterval(timer, 1000)
-		  timer--;
+	   while(timer>=0){
+		
 		console.log(timer)  
 		this.secondsLeft = timer
+		timer--;
 	  }
-	  /*timer = setInterval(this.loop.bind(this), 1000) 
-	  scoreCounter = this.guessedWords + second*/
-  },
+	  timer = setInterval(this.loop.bind(this), 1000) 
+	  scoreCounter = this.guessedWords + second
+  },*/
  /*loop: function () {
 	this.secondsLeft = 10
 	
@@ -220,6 +233,7 @@ function structureArrayByWordLength (words) {
 
   return tempArray
 }
+
 
 window.onload = function () {
   const typer = new TYPER()
