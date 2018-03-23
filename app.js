@@ -166,12 +166,13 @@ TYPER.prototype = {
     this.word = new Word(wordFromArray, this.canvas, this.ctx)
   },
 
-  keyPressed: function (event) {
+  keyPressed: function (event) { //*************** Otseselt pole seotud sellega aga kui lehel olles uuesti vajutada alusta mängu peaks uuesti laadima lehe */
     const letter = String.fromCharCode(event.which)
       if (letter === this.word.left.charAt(0)) {
         this.word.removeFirstLetter()
       } 
       else if(letter!=this.word.left.charAt(0)){
+
         this.word.changeLetterColor()
       }
    
@@ -214,9 +215,9 @@ Word.prototype = {
   },
 
   changeLetterColor: function (){
-    //this.left = this.left.slice(0)
-    this.ctx.fillStyle = 'red'
-  }
+    this.left = this.left.slice(0)
+    this.ctx.fillStyle = 'red'    
+  },
   
 }
 
