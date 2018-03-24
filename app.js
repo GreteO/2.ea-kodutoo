@@ -20,7 +20,21 @@ GameApp.routes = {
   'game': {
     'render': function () {
       console.log('>>>> Game')
+      
+      const typer = new TYPER()
+      window.typer = typer
+      
+
+      //document.getElementById('gameStart').addEventListener('click', typer.start())
+      //window.addEventListener('gameStart', typer.start())
+      //document.getElementById('gameStart').onclick = typer.start()
     }
+  },
+  'scores': {
+      'render': function (){
+        console.log('>>>> Scores')
+        //Kuidagi suunata skoori lehele kui mängija on vajutanud lõpeta mäng nuppu?
+      }
   }
 }
 
@@ -56,6 +70,8 @@ GameApp.prototype = {
     //document.getElementById('gameStart').addEventListener('click', TYPER)
 }
 
+//Viide: https://github.com/eesrakenduste-arendamine-2018k/3.ea-loeng/blob/master/main.js 
+
 
 const TYPER = function () {
   if (TYPER.instance_) {
@@ -74,6 +90,10 @@ const TYPER = function () {
   this.guessedWords = 0 //********************lisada skooriarvutusele
 
   this.secondsLeft = 10 //********************siduda skooriarvutusega
+  
+  this.gameCount = 10 //
+  this.gamePoints = 0 // 
+  this.gameScore = 0 // 
 
   this.init()
 }
@@ -103,10 +123,13 @@ TYPER.prototype = {
         const wordsFromFile = response.split('\n')
 		
         typer.words = structureArrayByWordLength(wordsFromFile)
-		
-		document.getElementById('gameStart').addEventListener('click', typer.start)
-        /*typer.start()*/
-		document.getElementById('gameStart').addEventListener('click', typer.score)
+
+
+
+		 document.getElementById("gameStart").addEventListener("click", typer.start())
+        //typer.start()
+     //document.getElementById('gameStart').addEventListener('click', typer.score)
+     document.getElementById("gameEnd").addEventListener("click", typer.end)
       }
     }
 
@@ -114,20 +137,21 @@ TYPER.prototype = {
     xmlhttp.send()
   },
   
- score: function() {
+ /*score: function() {
 	 
 	let count=10;
 	let counter=setInterval(timer, 1000);
 	function timer(){
-		count=count-1;
+    count=count-1;
+    console.log(count)
 		if (count <= 0){
 			clearInterval(counter);
 			return;
 		}
 	//document.getElementById("timer").innerHTML=count + " sekundit";  
 	}
-},
-	 
+ },*/
+
 	/* timer = setInterval(this.loop.bind(this), 1000)
 	  timer = 10
 	  
@@ -149,15 +173,61 @@ TYPER.prototype = {
 		clearInterval(timer)
 	}
 	this.word.Draw()
-  },*/
+ },*/
 
   start: function () {
     this.generateWord()  //**********************annab mingit errorit
     this.word.Draw()
 	
-    window.addEventListener('keypress', this.keyPressed.bind(this))
-    
+
+      this.secondsLeft = 10 // 
+      timer = 10 //
+      this.gameScore = 0 // 
+
+      window.addEventListener('keypress', this.keyPressed.bind(this))
+
+          
+      timer = setInterval(this.loop.bind(this), 1000)        
+      //document.getElementById('gameStart').addEventListener('click',this.timer)
   },	
+
+  end: function () {
+    timer = clearInterval(timer)
+    console.log("ENDSCORE: ",typer.gamePoints)
+
+  },
+
+ //Aja ja skoori algus
+ loop: function() {
+
+  this.gameCount -=1 
+  this.secondsLeft -= 1
+  // console.log("Sekundid: ",this.secondsLeft)
+	  if (this.secondsLeft <= -1){    
+      clearInterval(timer)
+      this.secondsLeft = 10
+      timer = setInterval(this.loop.bind(this), 1000)
+      this.generateWord()    
+    }
+    console.log("Punktid aja eest", this.gameCount)
+    if(this.gameCount<=-0){
+      this.gameCount = 11
+    }
+    this.word.Draw()
+ }, 
+ //lõpp
+
+  /*loop: function() {
+    //this.secondsLeft = 10
+    
+    this.secondsLeft -= 1
+  
+    //if (this.secondsLeft <= 0){    
+      console.log(this.secondsLeft)
+     // clearInterval(timer)    
+      //this.word.Draw()
+    //}
+  },*/
   
   generateWord: function () {
     const generatedWordLength = this.wordMinLength + parseInt(this.guessedWords / 5) 
@@ -173,20 +243,25 @@ TYPER.prototype = {
         this.word.removeFirstLetter()
       } 
       else if(letter!=this.word.left.charAt(0)){
-
         this.word.changeLetterColor()
       }
-   
-
       if (this.word.left.length === 0) {
         this.guessedWords += 1  //*******************************siia siduda skooriosa
         //console.log(this.guessedWords)
+        //this.gamePoints = this.gameCount
+        //console.log("EEEEEEH???? ",this.gamePoints)
+        this.gameScore = this.guessedWords + this.gameCount //
+        console.log("ARVATUD SÕNAD",this.guessedWords)//
+        console.log("GAMESKOOR",this.gameScore)//
+        this.gamePoints += this.gameScore//
+        console.log(this.gamePoints) //
+        this.secondsLeft = 10 //
+        this.gameCount = 10 //
         this.generateWord()
-      }
 
+      }
       this.word.Draw()
-    
-  }
+  },
 }
 
 /* WORD */
@@ -207,17 +282,20 @@ Word.prototype = {
 
     this.ctx.textAlign = 'left'
     this.ctx.font = '60px Courier'
-    this.ctx.fillText(typer.secondsLeft, 100, 100)
+    
+    this.ctx.fillText(typer.secondsLeft, 100, 100) //TRÜKIB AEGA
+    this.ctx.fillText(typer.guessedWords, 100, 200) //TRÜKIB ARVATUD SÕNU
+    this.ctx.fillText(typer.gamePoints, 100, 300) //TRÜKIB SKOORI
   },
 
-  removeFirstLetter: function () {  //*********************************tekitada changeWrongLetterColor() vmt.
+  removeFirstLetter: function () { 
     this.left = this.left.slice(1)
     this.ctx.fillStyle = 'black'
   },
 
   changeLetterColor: function (){
     this.left = this.left.slice(0)
-    this.ctx.fillStyle = 'red'    
+    this.ctx.fillStyle= 'red' 
   },
   
 }
@@ -238,8 +316,8 @@ function structureArrayByWordLength (words) {
 
 
 window.onload = function () {
-  const typer = new TYPER()
-  window.typer = typer
+  //const typer = new TYPER() //Tõstetud GameAppi alla
+ // window.typer = typer //Tõstetud GameAppi alla
   const app = new GameApp()
   window.app = app
 }
