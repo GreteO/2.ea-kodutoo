@@ -28,7 +28,7 @@
   body {
 	background-color: azure;
   }
-  h1, h2,h3{
+  h1, h2{
 	color: white;
 	text-shadow: 0px 0px 10px blue;
 	/*padding-left: 30px;*/

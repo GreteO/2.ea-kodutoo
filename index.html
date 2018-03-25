@@ -25,10 +25,16 @@
 		      <p>Mäng on koostatud koolitöö raames ja õppe eesmärgil.</p>
         <h2>Mängu kirjeldus</h2>
           <p>Vajutades <mark>Alusta mängu</mark> nupule hakka kirjutama ekraanil kuvatavaid sõnu.</p>
-
+        <h2>Tee oma valikud</h2>
+        <form id="data">
+          Nimi: <input type="text" Id="name" placeholder="John Doe" required><br><br>
+          Kui pikast sõnast alustame: <input type="number" Id="wordLength" min="1" max="31" value="5"><br><br>
+          <input type="submit" value="Mine mängima">
+          </form>
       </div>
 
-      <div id="game">       
+      <div id="game"> 
+        <h3>Tere, <script>document.getElementById("name").value</script></h3>      
         <button class="button" id="gameStart">Alusta mängu</button>
         <button class="button" id="gameEnd">Lõpeta mäng</button><br>
         <canvas></canvas>
