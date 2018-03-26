@@ -25,10 +25,6 @@ GameApp.routes = {
       const typer = new TYPER() 
       window.typer = typer  
 
-         // PHP faili salvestamise asi, ei toimi 
-      document
-      .querySelector('#gameEnd')
-      .addEventListener('click', this.saveServer)
      //Viide: https://github.com/eesrakenduste-arendamine-2018k/3.ea-loeng/blob/master/main.js
     
     }
@@ -36,9 +32,6 @@ GameApp.routes = {
   'scores': {
       'render': function (){
         console.log('>>>> Scores')
-            document //Vist peaks olema sellel lehel, ei toimi
-            .querySelector('#loadServer') 
-            .addEventListener('click', loadServer) 
       }
   }
 }
@@ -63,12 +56,10 @@ GameApp.prototype = {
 
       this.routes[this.currentRoute].render()
     } else {
-      /// 404 - ei olnud
     }
   },
 
   updateMenu: function () {
-    // http://stackoverflow.com/questions/195951/change-an-elements-class-with-javascript
     document.querySelector('.active-menu').className = document.querySelector('.active-menu').className.replace('active-menu', '')
     document.querySelector('.' + this.currentRoute).className += ' active-menu'
   }
@@ -278,37 +269,8 @@ function structureArrayByWordLength (words) {
 }
 
 // PHP faili salvestamine:
-function saveScore () {
-  function saveServer () {
-   const o = {
-   text: window.app.input.value,
-   date: new Date() 
-  }
 
-  let xhttp = new XMLHttpRequest()
-  xhttp.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-      console.log('salvestatud')
-    }
-  }
-  xhttp.open('POST', 'score.php', true)
-  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-  xhttp.send('json=' + JSON.stringify(o))
-}
 
-function loadServer () {
-  let xhttp = new XMLHttpRequest()
-  xhttp.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-      console.log('laetud')
-      console.log(JSON.parse(xhttp.responseText))
-    }
-  }
-
-  xhttp.open('GET', 'score.php?latest', true)
-  xhttp.send()
-}
-}
 //PHP faili salvestamine lõpp
 
 
