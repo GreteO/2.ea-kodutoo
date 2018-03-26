@@ -15,7 +15,6 @@ GameApp.routes = {
   'introduction': {
     'render': function () {
       console.log('>>>> Introduction')
-      
     }
   },
   'game': {
@@ -24,16 +23,15 @@ GameApp.routes = {
       
       const typer = new TYPER() 
       window.typer = typer  
-
-     //Viide: https://github.com/eesrakenduste-arendamine-2018k/3.ea-loeng/blob/master/main.js
-    
+     
+//Viide: https://github.com/eesrakenduste-arendamine-2018k/3.ea-loeng/blob/master/main.js
     }
   },
   'scores': {
       'render': function (){
         console.log('>>>> Scores')
       }
-  }
+    }
 }
 
 GameApp.prototype = {
@@ -63,11 +61,8 @@ GameApp.prototype = {
     document.querySelector('.active-menu').className = document.querySelector('.active-menu').className.replace('active-menu', '')
     document.querySelector('.' + this.currentRoute).className += ' active-menu'
   }
-
 }
-
 //Viide: https://github.com/eesrakenduste-arendamine-2018k/3.ea-loeng/blob/master/main.js 
-
 
 const TYPER = function () {
   if (TYPER.instance_) {
@@ -123,8 +118,6 @@ TYPER.prototype = {
 		
         typer.words = structureArrayByWordLength(wordsFromFile)
 
-
-
 		 document.getElementById("gameStart").addEventListener("click", typer.start()) /* ************** funktsiooni sulud muudavad kasutamise nulli ja tegelik alustaja on TYPER */
      document.getElementById("gameEnd").addEventListener("click", typer.end)
       }
@@ -134,7 +127,6 @@ TYPER.prototype = {
     xmlhttp.send()
   },
  
-
   start: function () {
       this.generateWord()  //**********************annab mingit errorit kui ülevalt sulud eemaldada ja seda funktsiooni sihipäraselt kasutada
       this.word.Draw()
@@ -145,8 +137,7 @@ TYPER.prototype = {
       this.gameScore = 0 // 
 
       window.addEventListener('keypress', this.keyPressed.bind(this))  
-      timer = setInterval(this.loop.bind(this), 1000)        
-     
+      timer = setInterval(this.loop.bind(this), 1000)         
   },	
 
   end: function () {
@@ -155,7 +146,6 @@ TYPER.prototype = {
     
     window.location.hash = 'scores'
     document.getElementById("endScore").innerHTML = typer.playerName+ ", Teie mängu skoor on " +typer.gamePoints+ " ja jõudsite trükkida "+typer.guessedWords+" sõna!"
-
   },
 
  //Aja ja skoori algus
@@ -179,7 +169,6 @@ TYPER.prototype = {
  }, 
  //lõpp
 
-  
   generateWord: function () {
     const generatedWordLength = this.wordMinLength + parseInt(this.guessedWords / 5) 
     const randomIndex = (Math.random() * (this.words[generatedWordLength].length - 1)).toFixed()
@@ -248,10 +237,7 @@ Word.prototype = {
   removeFirstLetter: function () { 
     this.left = this.left.slice(1)
     this.ctx.fillStyle = 'black'
-  },
-
-
-  
+  },  
 }
 
 /* HELPERS */
@@ -272,8 +258,6 @@ function structureArrayByWordLength (words) {
 
 
 //PHP faili salvestamine lõpp
-
-
 
 window.onload = function () {
   const app = new GameApp()
