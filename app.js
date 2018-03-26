@@ -37,7 +37,7 @@ GameApp.routes = {
       'render': function (){
         console.log('>>>> Scores')
             document //Vist peaks olema sellel lehel, ei toimi
-            .querySelector('#loadServer') //selle muutuja peaks muutma ja htmli panema
+            .querySelector('#loadServer') 
             .addEventListener('click', loadServer) 
       }
   }
@@ -161,7 +161,7 @@ TYPER.prototype = {
     timer = clearInterval(timer) /* *************** tuleks lisada andmete nullimine */
     console.log("ENDSCORE: ",typer.gamePoints, typer.playerName)
     window.location.hash = 'scores'
-    document.getElementById("endScore").innerHTML = "Teie mängu skoor on: " +typer.gamePoints
+    document.getElementById("endScore").innerHTML = typer.playerName+ ", Teie mängu skoor on: " +typer.gamePoints
 
   },
 
@@ -181,6 +181,7 @@ TYPER.prototype = {
     if(this.gameCount<=-0){
       this.gameCount = 11
     }
+
     this.word.Draw()
  }, 
  //lõpp
@@ -201,6 +202,7 @@ TYPER.prototype = {
       } 
       else if(letter!=this.word.left.charAt(0)){
         this.word.changeLetterColor()
+
       }
       if (this.word.left.length === 0) {
         this.guessedWords += 1  
@@ -247,7 +249,6 @@ Word.prototype = {
   changeLetterColor: function (){
     this.left = this.left.slice(0)
     this.ctx.fillStyle= 'red'
-  
   },
 
   removeFirstLetter: function () { 
@@ -275,11 +276,10 @@ function structureArrayByWordLength (words) {
 
 // PHP faili salvestamine:
 function saveScore () {
-function saveServer () {
-  //const o = {
-   // text: window.app.input.value,
-   // date: new Date()
-    typer.end()
+  function saveServer () {
+   const o = {
+   text: window.app.input.value,
+   date: new Date() 
   }
 
   let xhttp = new XMLHttpRequest()
@@ -290,7 +290,7 @@ function saveServer () {
   }
   xhttp.open('POST', 'score.php', true)
   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-  xhttp.send('json=' + JSON.stringify(gamePoints))
+  xhttp.send('json=' + JSON.stringify(o))
 }
 
 function loadServer () {
@@ -304,6 +304,7 @@ function loadServer () {
 
   xhttp.open('GET', 'score.php?latest', true)
   xhttp.send()
+}
 }
 //PHP faili salvestamine lõpp
 
