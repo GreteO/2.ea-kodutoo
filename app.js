@@ -23,14 +23,22 @@ GameApp.routes = {
       console.log('>>>> Game')
       
       const typer = new TYPER() /* ************** see on vist start funktsiooni tegelik käivitaja */
-      window.typer = typer                        /*  <><  mingi kala on sees :P */
+      window.typer = typer                       /*  <><  mingi kala on sees :P */
 
+         // PHP faili salvestamise asi, ei toimi 
+      document
+      .querySelector('#gameEnd')
+      .addEventListener('click', this.saveServer)
+     //Viide: https://github.com/eesrakenduste-arendamine-2018k/3.ea-loeng/blob/master/main.js
+    
     }
   },
   'scores': {
       'render': function (){
         console.log('>>>> Scores')
-        
+            document //Vist peaks olema sellel lehel, ei toimi
+            .querySelector('#loadServer') //selle muutuja peaks muutma ja htmli panema
+            .addEventListener('click', loadServer) 
       }
   }
 }
@@ -94,8 +102,6 @@ const TYPER = function () {
   this.gamePoints = 0  
   this.gameScore = 0  
 
-  
-
   this.init()
 }
 
@@ -142,7 +148,7 @@ TYPER.prototype = {
       this.word.Draw()
 	
 
-      this.secondsLeft = 10 // 
+      this.secondsLeft = 10  
       timer = 10 //
       this.gameScore = 0 // 
 
@@ -155,6 +161,7 @@ TYPER.prototype = {
     timer = clearInterval(timer) /* *************** tuleks lisada andmete nullimine */
     console.log("ENDSCORE: ",typer.gamePoints, typer.playerName)
     window.location.hash = 'scores'
+    document.getElementById("endScore").innerHTML = "Teie mängu skoor on: " +typer.gamePoints
 
   },
 
@@ -199,7 +206,6 @@ TYPER.prototype = {
         this.guessedWords += 1  
         //console.log(this.guessedWords)
         //this.gamePoints = this.gameCount
-        //console.log("EEEEEEH???? ",this.gamePoints)
         this.gameScore = this.guessedWords + this.gameCount //
         console.log("ARVATUD SÕNAD",this.guessedWords)//
         console.log("GAMESKOOR",this.gameScore)//
@@ -266,6 +272,41 @@ function structureArrayByWordLength (words) {
 
   return tempArray
 }
+
+// PHP faili salvestamine:
+function saveScore () {
+function saveServer () {
+  //const o = {
+   // text: window.app.input.value,
+   // date: new Date()
+    typer.end()
+  }
+
+  let xhttp = new XMLHttpRequest()
+  xhttp.onreadystatechange = function () {
+    if (this.readyState === 4 && this.status === 200) {
+      console.log('salvestatud')
+    }
+  }
+  xhttp.open('POST', 'score.php', true)
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+  xhttp.send('json=' + JSON.stringify(gamePoints))
+}
+
+function loadServer () {
+  let xhttp = new XMLHttpRequest()
+  xhttp.onreadystatechange = function () {
+    if (this.readyState === 4 && this.status === 200) {
+      console.log('laetud')
+      console.log(JSON.parse(xhttp.responseText))
+    }
+  }
+
+  xhttp.open('GET', 'score.php?latest', true)
+  xhttp.send()
+}
+//PHP faili salvestamine lõpp
+
 
 
 window.onload = function () {
