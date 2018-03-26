@@ -22,8 +22,8 @@ GameApp.routes = {
     'render': function () {
       console.log('>>>> Game')
       
-      const typer = new TYPER() /* ************** see on vist start funktsiooni tegelik käivitaja */
-      window.typer = typer                       /*  <><  mingi kala on sees :P */
+      const typer = new TYPER() 
+      window.typer = typer  
 
          // PHP faili salvestamise asi, ei toimi 
       document
@@ -91,7 +91,7 @@ const TYPER = function () {
 
   this.words = []
   this.word = null
-  this.wordMinLength = parseInt(document.getElementById("wordLength").value)  /** kui number liiga suureks läheb, tekib probleem ekraanile mahtuvusega */
+  this.wordMinLength = parseInt(document.getElementById("wordLength").value)  
 
   this.playerName = document.getElementById("name").value
 
@@ -158,10 +158,11 @@ TYPER.prototype = {
   },	
 
   end: function () {
-    timer = clearInterval(timer) /* *************** tuleks lisada andmete nullimine */
+    timer = clearInterval(timer) 
     console.log("ENDSCORE: ",typer.gamePoints, typer.playerName)
+    
     window.location.hash = 'scores'
-    document.getElementById("endScore").innerHTML = typer.playerName+ ", Teie mängu skoor on: " +typer.gamePoints
+    document.getElementById("endScore").innerHTML = typer.playerName+ ", Teie mängu skoor on " +typer.gamePoints+ " ja jõudsite trükkida "+typer.guessedWords+" sõna!"
 
   },
 
@@ -195,26 +196,27 @@ TYPER.prototype = {
     this.word = new Word(wordFromArray, this.canvas, this.ctx)
   },
 
-  keyPressed: function (event) { //*************** Otseselt pole seotud sellega aga kui lehel olles uuesti vajutada alusta mängu peaks uuesti laadima lehe */
+  keyPressed: function (event) { 
     const letter = String.fromCharCode(event.which)
       if (letter === this.word.left.charAt(0)) {
         this.word.removeFirstLetter()
       } 
       else if(letter!=this.word.left.charAt(0)){
         this.word.changeLetterColor()
+        console.log("vale täht AP",this.gameScore)
+        this.gameScore=0
+        console.log("nulli",this.gameScore)
 
       }
       if (this.word.left.length === 0) {
         this.guessedWords += 1  
-        //console.log(this.guessedWords)
-        //this.gamePoints = this.gameCount
-        this.gameScore = this.guessedWords + this.gameCount //
-        console.log("ARVATUD SÕNAD",this.guessedWords)//
-        console.log("GAMESKOOR",this.gameScore)//
-        this.gamePoints += this.gameScore//
-        console.log(this.gamePoints) //
-        this.secondsLeft = 10 //
-        this.gameCount = 10 //
+        this.gameScore += this.gameCount 
+        console.log("ARVATUD SÕNAD",this.guessedWords)
+        console.log("AJAPUNKTID",this.gameScore)
+        this.gamePoints = this.guessedWords+this.gameScore
+        console.log("KOKKU",this.gamePoints) 
+        this.secondsLeft = 10 
+        this.gameCount = 10 
         this.generateWord()
 
       }
@@ -243,7 +245,7 @@ Word.prototype = {
     
     this.ctx.fillText(typer.secondsLeft +  " sekundit", 100, 100 ) //TRÜKIB AEGA
     this.ctx.fillText(typer.guessedWords +  " sõna", 100, 200) //TRÜKIB ARVATUD SÕNU
-    this.ctx.fillText(typer.gamePoints +  " punkti", 100, 300) //TRÜKIB SKOORI
+    this.ctx.fillText(typer.gameScore +  " punkti", 100, 300) //TRÜKIB SKOORI
   },
 
   changeLetterColor: function (){
