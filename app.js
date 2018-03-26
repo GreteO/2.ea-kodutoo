@@ -95,6 +95,7 @@ const TYPER = function () {
 
   this.playerName = document.getElementById("name").value
 
+
   this.guessedWords = 0
   this.secondsLeft = 10 
   
