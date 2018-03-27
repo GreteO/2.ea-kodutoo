@@ -118,7 +118,8 @@ TYPER.prototype = {
 		
         typer.words = structureArrayByWordLength(wordsFromFile)
 
-		 document.getElementById("gameStart").addEventListener("click", typer.start()) /* ************** funktsiooni sulud muudavad kasutamise nulli ja tegelik alustaja on TYPER */
+		 //document.getElementById("gameStart").addEventListener("click", typer.start()) /* ************** funktsiooni sulud muudavad kasutamise nulli ja tegelik alustaja on TYPER */
+     //document.getElementById("gameStart").innerHTML = typer.start()
      document.getElementById("gameEnd").addEventListener("click", typer.end)
       }
     }
