@@ -1,1 +1,1 @@
-"Mängija:  punktide arvuga: 18<br>""Mängija: Juku punktide arvuga: 29<br>""Mängija: Grete, punktide arvuga: 29<br>""Mängija: Mari, punktide arvuga: 39<br>"
+"Mängija:  punktide arvuga: 18<br>""Mängija: Juku punktide arvuga: 29<br>""Mängija: Grete, punktide arvuga: 29<br>""Mängija: Mari, punktide arvuga: 39<br>""Mängija: mängur, punktide arvuga: 25<br>""Mängija: mängur, punktide arvuga: 9<br>""Mängija: mina, punktide arvuga: 18<br>""Mängija: Aune Arakas, punktide arvuga: 136<br>"

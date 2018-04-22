@@ -15,12 +15,14 @@ GameApp.routes = {
   'introduction': {
     'render': function () {
       console.log('>>>> Introduction')
+      let myArray = ['Kaspar Kaalikas', 'Juku Juurikas', 'Aune Arakas', 'Õnne Tulits', 'Jane Doe', 'John Doe']; 
+      let rand = myArray[Math.floor(Math.random() * myArray.length)];
+      document.getElementById("name").value = rand;
     }
   },
   'game': {
     'render': function () {
       console.log('>>>> Game')
-      
       const typer = new TYPER() 
       window.typer = typer  
 
@@ -41,7 +43,6 @@ GameApp.routes = {
 GameApp.prototype = {
   init: function () {
     console.log('Rakendus läks tööle')
-
     window.addEventListener('hashchange', this.routeChange.bind(this))
 
     if (!window.location.hash) {
@@ -50,6 +51,8 @@ GameApp.prototype = {
       this.routeChange()
     }
   },
+
+
 
   routeChange: function (event) {
     this.currentRoute = location.hash.slice(1)
@@ -66,7 +69,11 @@ GameApp.prototype = {
     document.querySelector('.' + this.currentRoute).className += ' active-menu'
   }
 }
+
+
 //Viide: https://github.com/eesrakenduste-arendamine-2018k/3.ea-loeng/blob/master/main.js 
+
+
 
 const TYPER = function () {
   if (TYPER.instance_) {
@@ -84,7 +91,9 @@ const TYPER = function () {
   this.wordMinLength = parseInt(document.getElementById("wordLength").value)  
 
   this.playerName = document.getElementById("name").value
-
+  console.log(this.playerName)
+  document.getElementById("userName").innerHTML = this.playerName
+  
 
   this.guessedWords = 0
   this.secondsLeft = 10 
@@ -147,12 +156,13 @@ TYPER.prototype = {
   },	
 
   end: function () {
-    timer = clearInterval(timer) 
-    console.log("ENDSCORE: ",typer.gamePoints, typer.playerName)
+      timer = clearInterval(timer) 
+      console.log("ENDSCORE: ",typer.gamePoints, typer.playerName)
+      
+      window.location.hash = 'scores'
+      document.getElementById("endScore").innerHTML = typer.playerName+ ", Teie mängu skoor on " +typer.gamePoints+ " ja jõudsite trükkida "+typer.guessedWords+" sõna!"
     
-    window.location.hash = 'scores'
-    document.getElementById("endScore").innerHTML = typer.playerName+ ", Teie mängu skoor on " +typer.gamePoints+ " ja jõudsite trükkida "+typer.guessedWords+" sõna!"
-  },
+ },
 
  //Aja ja skoori algus
  loop: function() {
@@ -262,22 +272,24 @@ function structureArrayByWordLength (words) {
 
 // PHP faili salvestamine:
 function saveServer () {
-  const scoreInfo = 'Mängija: ' + typer.playerName + ", punktide arvuga: "+typer.gamePoints+ '<br>'
-  
+  if (typer.gamePoints != 0){
+    const scoreInfo = 'Mängija: ' + typer.playerName + ", punktide arvuga: "+typer.gamePoints+'<br>'
+    
 
-  let xhttp = new XMLHttpRequest()
-  xhttp.open('POST', 'score.php', true)
-  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-  
-  xhttp.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-      console.log('salvestatud')
-      console.log(this.responseText)
+    let xhttp = new XMLHttpRequest()
+    xhttp.open('POST', 'score.php', true)
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    
+    xhttp.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        console.log('salvestatud')
+        console.log(this.responseText)
+      }
     }
+    xhttp.send('json=' + JSON.stringify(scoreInfo))
+    //xhttp.send(scoreInfo)
+    console.log(scoreInfo) 
   }
-  xhttp.send('json=' + JSON.stringify(scoreInfo))
-  //xhttp.send(scoreInfo)
-  console.log(scoreInfo) 
 }
 
 function loadServer () {
