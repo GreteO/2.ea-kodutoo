@@ -6,11 +6,11 @@ if (isset($_GET['latest'])){
 // WRITE POST save.php 
 // body sees json
 if (isset($_POST['json'])){
-  if(file_put_contents('scoreData.txt', $_POST['json'])){
-    //$o =   json_decode($_POST['json']);
-    $gamePoints =  json_decode($_POST['json']);
-        //echo $o->text.' salvestati';
-    echo $gamePoints->text. 'salvestati';
+  if(file_put_contents('scoreData.txt', $_POST['json'], FILE_APPEND)){
+    $scoreInfo =  json_decode($_POST['json']);
+    //$gamePoints =  json_decode($_POST['json']);
+    //echo $scoreInfo->text.' salvestati';
+    //echo $gamePoints->points. 'salvestati';
   }
 }
 ?>

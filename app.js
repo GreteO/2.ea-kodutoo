@@ -23,6 +23,8 @@ GameApp.routes = {
       
       const typer = new TYPER() 
       window.typer = typer  
+
+      //document.querySelector('#gameEnd').addEventListener('click', saveServer)
      
 //Viide: https://github.com/eesrakenduste-arendamine-2018k/3.ea-loeng/blob/master/main.js
     }
@@ -30,6 +32,8 @@ GameApp.routes = {
   'scores': {
       'render': function (){
         console.log('>>>> Scores')
+        
+        document.querySelector('#loadServer').addEventListener('click', loadServer)
       }
     }
 }
@@ -121,6 +125,7 @@ TYPER.prototype = {
 		 //document.getElementById("gameStart").addEventListener("click", typer.start()) /* ************** funktsiooni sulud muudavad kasutamise nulli ja tegelik alustaja on TYPER */
      //document.getElementById("gameStart").innerHTML = typer.start()
      document.getElementById("gameEnd").addEventListener("click", typer.end)
+     document.querySelector('#gameEnd').addEventListener('click', saveServer)
       }
     }
                                                                                                
@@ -256,8 +261,39 @@ function structureArrayByWordLength (words) {
 }
 
 // PHP faili salvestamine:
+function saveServer () {
+  const scoreInfo = 'Mängija: ' + typer.playerName + ", punktide arvuga: "+typer.gamePoints+ '<br>'
+  
 
+  let xhttp = new XMLHttpRequest()
+  xhttp.open('POST', 'score.php', true)
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+  
+  xhttp.onreadystatechange = function () {
+    if (this.readyState === 4 && this.status === 200) {
+      console.log('salvestatud')
+      console.log(this.responseText)
+    }
+  }
+  xhttp.send('json=' + JSON.stringify(scoreInfo))
+  //xhttp.send(scoreInfo)
+  console.log(scoreInfo) 
+}
 
+function loadServer () {
+  let xhttp = new XMLHttpRequest()
+  xhttp.onreadystatechange = function () {
+    if (this.readyState === 4 && this.status === 200) {
+      console.log('laetud')
+      //console.log(JSON.parse(xhttp.response))
+      console.log(xhttp.responseText)
+
+      document.getElementById("playerInfoDB").innerHTML=this.responseText
+    }
+  }
+  xhttp.open('GET', 'score.php?latest', true)
+  xhttp.send()
+}
 //PHP faili salvestamine lõpp
 
 window.onload = function () {
