@@ -274,7 +274,7 @@ function structureArrayByWordLength (words) {
 function saveServer () {
   if (typer.gamePoints != 0){
     const scoreInfo = 'Mängija: ' + typer.playerName + ", punktide arvuga: "+typer.gamePoints+'<br>'
-    
+
 
     let xhttp = new XMLHttpRequest()
     xhttp.open('POST', 'score.php', true)
