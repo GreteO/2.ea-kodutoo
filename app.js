@@ -275,6 +275,7 @@ function structureArrayByWordLength (words) {
 // PHP faili salvestamine:
 function saveServer () {
   if (typer.gamePoints != 0){
+    
     const scoreInfo = 'Mängija: ' + typer.playerName + ", punktide arvuga: "+typer.gamePoints+'<br>'
 
 
@@ -307,6 +308,8 @@ function loadServer () {
       scores.forEach(function(game){
         document.getElementById("playerInfoDB").innerHTML += game.score + ' ' + game.player +  '<br>'
       })
+
+      
 
     }
   }
