@@ -1,5 +1,11 @@
 # 2. kodutöö – kirjutamise mängu täiendamine
 
+## Oluline:
+On vaja luua scoreData.txt fail juurkausta ja anda kirjutamisõigused
+´´´
+[]
+´´´
+
 ## Autorid:
 Grete Ojavere
 
