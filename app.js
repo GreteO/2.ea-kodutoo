@@ -26,7 +26,6 @@ GameApp.routes = {
       const typer = new TYPER() 
       window.typer = typer  
 
-      //document.querySelector('#gameEnd').addEventListener('click', saveServer)
      
 //Viide: https://github.com/eesrakenduste-arendamine-2018k/3.ea-loeng/blob/master/main.js
     }
@@ -69,9 +68,6 @@ GameApp.prototype = {
     document.querySelector('.' + this.currentRoute).className += ' active-menu'
   }
 }
-
-
-//Viide: https://github.com/eesrakenduste-arendamine-2018k/3.ea-loeng/blob/master/main.js 
 
 
 
@@ -131,10 +127,10 @@ TYPER.prototype = {
 		
         typer.words = structureArrayByWordLength(wordsFromFile)
 
-		 //document.getElementById("gameStart").addEventListener("click", typer.start()) /* ************** funktsiooni sulud muudavad kasutamise nulli ja tegelik alustaja on TYPER */
-     //document.getElementById("gameStart").innerHTML = typer.start()
+		
      document.getElementById("gameEnd").addEventListener("click", typer.end)
      document.querySelector('#gameEnd').addEventListener('click', saveServer)
+     document.getElementById("gameEnd").addEventListener("click", Word.clear)
       }
     }
                                                                                                
@@ -143,7 +139,7 @@ TYPER.prototype = {
   },
  
   start: function () {
-      this.generateWord()  //**********************annab mingit errorit kui ülevalt sulud eemaldada ja seda funktsiooni sihipäraselt kasutada
+      this.generateWord() 
       this.word.Draw()
 	
 
@@ -243,6 +239,12 @@ Word.prototype = {
     this.ctx.fillText(typer.secondsLeft +  " sekundit", 100, 100 ) //TRÜKIB AEGA
     this.ctx.fillText(typer.guessedWords +  " sõna", 100, 200) //TRÜKIB ARVATUD SÕNU
     this.ctx.fillText(typer.gameScore +  " punkti", 100, 300) //TRÜKIB SKOORI
+
+
+  },
+
+  clear: function (){
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
   },
 
   changeLetterColor: function (){
@@ -286,7 +288,7 @@ function saveServer () {
         console.log(this.responseText)
       }
     }
-    xhttp.send('json=' + JSON.stringify(scoreInfo))
+    xhttp.send('json=' + JSON.stringify({ player: typer.playerName , score: typer.gamePoints }))
     //xhttp.send(scoreInfo)
     console.log(scoreInfo) 
   }
@@ -300,7 +302,12 @@ function loadServer () {
       //console.log(JSON.parse(xhttp.response))
       console.log(xhttp.responseText)
 
-      document.getElementById("playerInfoDB").innerHTML=this.responseText
+      const scores = JSON.parse(xhttp.responseText)
+      document.getElementById("playerInfoDB").innerHTML=''
+      scores.forEach(function(game){
+        document.getElementById("playerInfoDB").innerHTML += game.score + ' ' + game.player +  '<br>'
+      })
+
     }
   }
   xhttp.open('GET', 'score.php?latest', true)
