@@ -33,7 +33,7 @@ GameApp.routes = {
   'scores': {
       'render': function (){
         console.log('>>>> Scores')
-        
+        loadServer()
         document.querySelector('#loadServer').addEventListener('click', loadServer)
       }
     }
@@ -305,8 +305,9 @@ function loadServer () {
 
       const scores = JSON.parse(xhttp.responseText)
       document.getElementById("playerInfoDB").innerHTML=''
-      scores.forEach(function(game){
-        document.getElementById("playerInfoDB").innerHTML += game.score + ' ' + game.player +  '<br>'
+      scores.forEach(function(game, index){
+        if(index>9){return}
+        document.getElementById("playerInfoDB").innerHTML += game.score + ' ' + (game.player || 'Tundmatu') +  '<br>'
       })
 
       
